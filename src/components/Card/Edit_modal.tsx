@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardForm from "./CardForm";
 import RecipeCard from "./RecipeCard";
 
-export default function EditModal({ onSave }) {
-  // const [createdCards, setCreatedCards] = useState([]);
-  const [formData, setFormData] = useState({
-    title: "",
-    time: "",
-    cover: "",
-    description: "",
-  });
+export default function EditModal({ onSave, initialData }) {
+  const [formData, setFormData] = useState(
+    initialData || {
+      title: "",
+      time: "",
+      cover: "",
+      description: "",
+    }
+  );
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData); //текущие данные карточки
+    }
+  }, [initialData]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -18,17 +25,6 @@ export default function EditModal({ onSave }) {
       [name]: value,
     }));
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setCreatedCards((prevItems) => [...prevItems, formData]);
-  //   setFormData({
-  //     title: "",
-  //     time: "",
-  //     cover: "",
-  //     description: "",
-  //   });
-  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();

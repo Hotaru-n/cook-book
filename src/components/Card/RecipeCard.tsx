@@ -1,6 +1,14 @@
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 
-const RecipeCard = ({ isActive, onClick, onDelete, time, title, cover }) => {
+const RecipeCard = ({
+  isActive,
+  onClick,
+  onEdit,
+  onDelete,
+  time,
+  title,
+  cover,
+}) => {
   return (
     <article className="main__card card">
       <div className="main__card-image-wrapper">
@@ -18,7 +26,7 @@ const RecipeCard = ({ isActive, onClick, onDelete, time, title, cover }) => {
           style={{
             fontSize: "15px",
           }}
-          onClick={null}
+          onClick={onEdit}
         />
         <img
           className="main__card-image"

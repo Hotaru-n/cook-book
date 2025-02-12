@@ -14,6 +14,7 @@ const RecipeGallary = () => {
   const [cardModalIsOpen, setCardModalOpen] = useState(false);
   const [editModalIsOpen, setEditModalOpen] = useState(false);
   const [activeCardId, setActiveCardId] = useState(null);
+  const [editingCard, setEditingCard] = useState(null);
 
   const handleAddCard = (newCard) => {
     const cardWithId = {
@@ -23,6 +24,19 @@ const RecipeGallary = () => {
     setNextId((prevId) => prevId + 1);
     setCardData((prevCards) => [...prevCards, cardWithId]);
     console.log("New card id:", cardWithId.id);
+  };
+
+  const handleEditCard = (card) => {
+    setEditingCard(card);
+    setEditModalOpen(true);
+  };
+
+  const handleSaveEditedCard = (updatedCard) => {
+    setCardData((prevCards) =>
+      prevCards.map((card) => (card.id === updatedCard.id ? updatedCard : card))
+    );
+    setEditModalOpen(false);
+    setEditingCard(null);
   };
 
   const handleDeleteCard = (id) => {
@@ -67,14 +81,24 @@ const RecipeGallary = () => {
           </Button> */}
           {cardModalIsOpen && (
             <CardModal onClose={handleCloseModal}>
-              <img width={"300"} src="/images/sokaku.jpg" />
-              <p>{selectedCard?.description}</p>
+              {/* <img width={"300"} src="/images/sokaku.jpg" /> */}
+              <p>
+                <img
+                  width={"300"}
+                  src="/images/sokaku.jpg"
+                  className="modal__card-image"
+                />
+                {selectedCard?.description}
+              </p>
             </CardModal>
           )}
         </article>
         {editModalIsOpen && (
           <CardModal onClose={handleCloseModal}>
-            <EditModal onSave={handleAddCard} />
+            <EditModal
+              onSave={editingCard ? handleSaveEditedCard : handleAddCard}
+              initialData={editingCard}
+            />
           </CardModal>
         )}
         <article></article>
@@ -84,6 +108,7 @@ const RecipeGallary = () => {
               <RecipeCard
                 // onClick={() => setCardModalOpen(true)}
                 onClick={() => handleOpenModal(card)}
+                onEdit={() => handleEditCard(card)}
                 onDelete={() => handleDeleteCard(card.id)}
                 key={card.id}
                 title={card.title}

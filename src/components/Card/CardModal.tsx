@@ -19,7 +19,6 @@ const CardModal = ({ onClose, children }) => {
           </div>
         </div>
       </div>
-      {/* )} */}
     </>
   );
 };
