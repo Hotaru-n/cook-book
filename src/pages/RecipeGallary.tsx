@@ -7,11 +7,27 @@ import { Button } from "antd";
 import EditModal from "../components/Card/Edit_modal";
 
 const RecipeGallary = () => {
-  const [cardData] = useState(cardInfo);
+  // const [cardData, setCardData] = useState([]);
+  const [cardData, setCardData] = useState(cardInfo);
+  const [nextId, setNextId] = useState(cardInfo.length + 1);
   const [selectedCard, setSelectedCard] = useState(null);
   const [cardModalIsOpen, setCardModalOpen] = useState(false);
   const [editModalIsOpen, setEditModalOpen] = useState(false);
   const [activeCardId, setActiveCardId] = useState(null);
+
+  const handleAddCard = (newCard) => {
+    const cardWithId = {
+      ...newCard,
+      id: nextId,
+    };
+    setNextId((prevId) => prevId + 1);
+    setCardData((prevCards) => [...prevCards, cardWithId]);
+    console.log("New card id:", cardWithId.id);
+  };
+
+  const handleDeleteCard = (id) => {
+    setCardData((prevCards) => prevCards.filter((card) => card.id !== id));
+  };
 
   const handleOpenModal = (card) => {
     setSelectedCard(card);
@@ -27,7 +43,7 @@ const RecipeGallary = () => {
   };
 
   // console.table(cardData);
-  console.log({ cardModalIsOpen, activeCardId });
+  // console.log({ cardModalIsOpen, activeCardId });
 
   return (
     <div className="main-div">
@@ -39,7 +55,7 @@ const RecipeGallary = () => {
             className="button main__title-block-button "
             onClick={() => setEditModalOpen(true)}
           >
-            MODAL
+            New Card
           </Button>
         </article>
         <article>
@@ -51,13 +67,14 @@ const RecipeGallary = () => {
           </Button> */}
           {cardModalIsOpen && (
             <CardModal onClose={handleCloseModal}>
-              <p>{selectedCard?.recipe}</p>
+              <img width={"300"} src="/images/sokaku.jpg" />
+              <p>{selectedCard?.description}</p>
             </CardModal>
           )}
         </article>
         {editModalIsOpen && (
           <CardModal onClose={handleCloseModal}>
-            <EditModal />
+            <EditModal onSave={handleAddCard} />
           </CardModal>
         )}
         <article></article>
@@ -67,9 +84,11 @@ const RecipeGallary = () => {
               <RecipeCard
                 // onClick={() => setCardModalOpen(true)}
                 onClick={() => handleOpenModal(card)}
+                onDelete={() => handleDeleteCard(card.id)}
                 key={card.id}
                 title={card.title}
                 time={card.time}
+                cover={card.cover}
                 isActive={cardModalIsOpen && activeCardId === card.id}
               />
             );

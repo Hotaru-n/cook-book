@@ -7,10 +7,10 @@ export default function CardForm(props) {
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
+          id="title"
+          name="title"
           className="product-form__input"
-          value={props.value.name}
+          value={props.value.title}
           onChange={props.onChange}
         />
       </div>
@@ -28,15 +28,15 @@ export default function CardForm(props) {
         />
       </div> */}
       <div className="product-form__group">
-        <label htmlFor="price" className="product-form__label">
+        <label htmlFor="time" className="product-form__label">
           Время:
         </label>
         <input
           type="number"
-          id="price"
-          name="price"
+          id="time"
+          name="time"
           className="product-form__input"
-          value={props.value.price}
+          value={props.value.time}
           onChange={props.onChange}
         />
       </div>

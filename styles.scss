@@ -151,6 +151,31 @@ body {
       height: 350px;
       display: block;
       border-radius: 25px;
+      object-fit: cover;
+    }
+
+    &-edit {
+      position: absolute;
+      top: 3.5rem;
+      right: 4rem;
+      background-color: #000000;
+      margin: 0;
+      padding: 10px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 12px 1px #4b1f20a0;
+      user-select: none;
+    }
+
+    &-delete {
+      position: absolute;
+      top: 0.5rem;
+      right: 4rem;
+      background-color: #000000;
+      margin: 0;
+      padding: 10px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 12px 1px #4b1f20a0;
+      user-select: none;
     }
 
     &-time {
@@ -183,12 +208,12 @@ body {
     &-button {
       height: 50px;
       background: linear-gradient(to top, #1a1a1a 50%, #569dae 50%);
-      background-size: 100% 200%;
+      background-size: 100% 201%;
       background-position: 0 100%;
       border: none;
       border-radius: 0 0 15px 15px;
       // background-color: #569dae;
-      overflow: hidden;
+      // overflow: hidden;
       transition: background-position 0.4s ease;
 
       &:hover {
@@ -249,6 +274,7 @@ body {
   cursor: pointer;
   transition: all 0.3s;
   font-weight: bold;
+  overflow: hidden;
 }
 
 .button--transparrent {
@@ -280,9 +306,11 @@ body {
   }
 
   &__card-content {
+    // display: flex;
     position: relative;
     margin: 20x;
     width: 100%;
+    min-width: 800px;
     max-width: 600px;
     border-radius: 20px;
     background-color: #272727;
@@ -308,9 +336,9 @@ body {
 }
 
 .product-form {
-  width: 500px;
+  width: 370px;
   height: 500px;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
