@@ -2,21 +2,38 @@
   "items": [
     {
       "id": 1,
+      "cover": "",
       "title": "Паста в грибном соусе с курицей",
       "time": 30,
-      "recipe": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque, exercitationem."
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque, exercitationem."
     },
     {
       "id": 2,
+      "cover": "",
       "title": "Салат Цезарь с креветками",
       "time": 20,
-      "recipe": "Хрустящие листья салата, сочные креветки и ароматный соус."
+      "description": "Хрустящие листья салата, сочные креветки и ароматный соус."
     },
     {
       "id": 3,
+      "cover": "",
       "title": "Куриные шашлычки в медовом маринаде",
       "time": 40,
-      "recipe": "Нежное куриное филе в сладко-пряном маринаде, запечённое до золотистой корочки."
+      "description": "Нежное куриное филе в сладко-пряном маринаде, запечённое до золотистой корочки."
+    },
+    {
+      "id": 4,
+      "title": "test",
+      "time": "",
+      "cover": "https://sun9-27.userapi.com/impg/FsSt5pPnHcc2ICpiKPxQ_U4l-yLuG1F6HJZgkQ/3huVcpz2s4U.jpg?size=1500x1500&quality=95&sign=99caedf151882245417934f6015a0ad6&type=album",
+      "description": ""
+    },
+    {
+      "id": 5,
+      "title": ",j,jhv",
+      "time": "",
+      "cover": "https://sun9-67.userapi.com/s/v1/ig2/3l-ZZb7rcOa0-ZAWsFjKw4iCF5s6VB1nzTjQPK1rc6JTzq7DP36nfCX5ttFng1_uL-9y8xfhMupnAtBWBLIx8o_t.jpg?quality=96&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720,1080x1080,1280x1280,1440x1440,1620x1620&from=bu&u=fYdjaBqvJKoMB5_iScIn6wOBMCzWUL_jMW2catTVH-k&cs=1620x1620",
+      "description": ""
     }
   ]
 }

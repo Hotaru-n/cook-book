@@ -1,22 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import RecipeCard from "../components/Card/RecipeCard";
-import { cardInfo } from "../data";
+// import { cardInfo } from "../data";
 import CardModal from "../components/Card/CardModal";
 import { Button } from "antd";
 import EditModal from "../components/Card/Edit_modal";
+import apiRequest from "../apiRequest";
+
+// npx json-server data/db.json
 
 const RecipeGallary = () => {
-  // const [cardData, setCardData] = useState([]);
-  const [cardData, setCardData] = useState(cardInfo);
-  const [nextId, setNextId] = useState(cardInfo.length + 1);
+  const API_URL = "http://localhost:3000/items";
+
+  const [cardData, setCardData] = useState([]);
+  const [nextId, setNextId] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [cardModalIsOpen, setCardModalOpen] = useState(false);
   const [editModalIsOpen, setEditModalOpen] = useState(false);
   const [activeCardId, setActiveCardId] = useState(null);
   const [editingCard, setEditingCard] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
 
-  const handleAddCard = (newCard) => {
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw Error("Did not reseive expected data");
+        const listItems = await response.json();
+        console.log(listItems);
+        setCardData(listItems);
+        setFetchError(null);
+        setNextId(listItems.length + 1);
+      } catch (err) {
+        console.log(err.message);
+        setFetchError(err.message);
+      }
+    };
+    setTimeout(() => {
+      (async () => await fetchItems())();
+    }, 500);
+  }, []);
+
+  const handleAddCard = async (newCard) => {
     const cardWithId = {
       ...newCard,
       id: nextId,
@@ -24,6 +49,16 @@ const RecipeGallary = () => {
     setNextId((prevId) => prevId + 1);
     setCardData((prevCards) => [...prevCards, cardWithId]);
     console.log("New card id:", cardWithId.id);
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cardWithId),
+    };
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchError(result);
   };
 
   const handleEditCard = (card) => {
@@ -31,12 +66,23 @@ const RecipeGallary = () => {
     setEditModalOpen(true);
   };
 
-  const handleSaveEditedCard = (updatedCard) => {
+  const handleSaveEditedCard = async (updatedCard) => {
     setCardData((prevCards) =>
       prevCards.map((card) => (card.id === updatedCard.id ? updatedCard : card))
     );
     setEditModalOpen(false);
     setEditingCard(null);
+
+    const updateOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedCard),
+    };
+    const reqUrl = `${API_URL}/${updatedCard.id}`;
+    const result = await apiRequest(reqUrl, updateOptions);
+    if (result) setFetchError(result);
   };
 
   const handleDeleteCard = (id) => {
@@ -56,9 +102,6 @@ const RecipeGallary = () => {
     setActiveCardId(null);
   };
 
-  // console.table(cardData);
-  // console.log({ cardModalIsOpen, activeCardId });
-
   return (
     <div className="main-div">
       <Header />
@@ -73,15 +116,8 @@ const RecipeGallary = () => {
           </Button>
         </article>
         <article>
-          {/* <Button
-            className="button menu__button "
-            onClick={() => setCardModalOpen(true)}
-          >
-            MODAL
-          </Button> */}
           {cardModalIsOpen && (
             <CardModal onClose={handleCloseModal}>
-              {/* <img width={"300"} src="/images/sokaku.jpg" /> */}
               <p>
                 <img
                   width={"300"}
@@ -103,10 +139,22 @@ const RecipeGallary = () => {
         )}
         <article></article>
         <section className=" main__card-container ">
+          {fetchError && (
+            <p
+              style={{
+                marginLeft: "2rem",
+                textAlign: "center",
+                borderRadius: "7px",
+                width: "600px",
+                backgroundColor: "#466A44",
+                color: "#E0D5BE",
+                fontSize: "2rem",
+              }}
+            >{`Error: ${fetchError}`}</p>
+          )}
           {cardData.map((card) => {
             return (
               <RecipeCard
-                // onClick={() => setCardModalOpen(true)}
                 onClick={() => handleOpenModal(card)}
                 onEdit={() => handleEditCard(card)}
                 onDelete={() => handleDeleteCard(card.id)}
