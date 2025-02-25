@@ -15,7 +15,7 @@ const CardModal = ({ onClose, children }) => {
                 }}
               />
             </div>
-            {children}
+            <div className="modal__content-wrapper">{children}</div>
           </div>
         </div>
       </div>

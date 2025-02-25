@@ -44,7 +44,7 @@ const RecipeGallary = () => {
   const handleAddCard = async (newCard) => {
     const cardWithId = {
       ...newCard,
-      id: nextId,
+      id: nextId.toString(),
     };
     setNextId((prevId) => prevId + 1);
     setCardData((prevCards) => [...prevCards, cardWithId]);
@@ -85,8 +85,23 @@ const RecipeGallary = () => {
     if (result) setFetchError(result);
   };
 
-  const handleDeleteCard = (id) => {
-    setCardData((prevCards) => prevCards.filter((card) => card.id !== id));
+  const handleDeleteCard = async (id) => {
+    setCardData((prevCards) => {
+      const updatedCards = prevCards.filter((card) => card.id !== id);
+
+      // Обновляем nextId, находя максимальный id среди оставшихся карточек
+      const maxId = updatedCards.reduce(
+        (max, card) => Math.max(max, parseInt(card.id, 10)),
+        0
+      );
+      setNextId(maxId + 1); // Устанавливаем следующий ID
+      return updatedCards;
+    });
+
+    const deleteOptions = { method: "DELETE" };
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl, deleteOptions);
+    if (result) setFetchError(result);
   };
 
   const handleOpenModal = (card) => {
@@ -100,6 +115,7 @@ const RecipeGallary = () => {
     setEditModalOpen(false);
     setSelectedCard(null);
     setActiveCardId(null);
+    setEditingCard(null);
   };
 
   return (
@@ -107,7 +123,7 @@ const RecipeGallary = () => {
       <Header />
       <main className="main">
         <article className="main__title-block">
-          <h1 className="main__title-block-text">RECIPE GALLARY</h1>
+          <h1 className="main__title-block-text">RECIPE GALLERY</h1>
           <Button
             className="button main__title-block-button "
             onClick={() => setEditModalOpen(true)}
