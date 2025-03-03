@@ -9,17 +9,25 @@ import apiRequest from "../apiRequest";
 
 // npx json-server data/db.json
 
+interface Card {
+  id: string | number;
+  cover: string;
+  title: string;
+  time: string;
+  description: string;
+}
+
 const RecipeGallary = () => {
   const API_URL = "http://localhost:3000/items";
 
-  const [cardData, setCardData] = useState([]);
-  const [nextId, setNextId] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [cardData, setCardData] = useState<Card[]>([]);
+  const [nextId, setNextId] = useState<number>(0);
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [cardModalIsOpen, setCardModalOpen] = useState(false);
   const [editModalIsOpen, setEditModalOpen] = useState(false);
   const [activeCardId, setActiveCardId] = useState(null);
-  const [editingCard, setEditingCard] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
+  const [editingCard, setEditingCard] = useState<Card | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -32,8 +40,13 @@ const RecipeGallary = () => {
         setFetchError(null);
         setNextId(listItems.length + 1);
       } catch (err) {
-        console.log(err.message);
-        setFetchError(err.message);
+        if (err instanceof Error) {
+          console.log(err.message);
+          setFetchError(err.message);
+        } else {
+          console.log("Unknown error", err);
+          setFetchError("Unknown error occurred");
+        }
       }
     };
     setTimeout(() => {
@@ -41,7 +54,7 @@ const RecipeGallary = () => {
     }, 500);
   }, []);
 
-  const handleAddCard = async (newCard) => {
+  const handleAddCard = async (newCard: Card) => {
     const cardWithId = {
       ...newCard,
       id: nextId.toString(),
@@ -61,12 +74,12 @@ const RecipeGallary = () => {
     if (result) setFetchError(result);
   };
 
-  const handleEditCard = (card) => {
+  const handleEditCard = (card: Card) => {
     setEditingCard(card);
     setEditModalOpen(true);
   };
 
-  const handleSaveEditedCard = async (updatedCard) => {
+  const handleSaveEditedCard = async (updatedCard: Card) => {
     setCardData((prevCards) =>
       prevCards.map((card) => (card.id === updatedCard.id ? updatedCard : card))
     );
@@ -85,7 +98,7 @@ const RecipeGallary = () => {
     if (result) setFetchError(result);
   };
 
-  const handleDeleteCard = async (id) => {
+  const handleDeleteCard = async (id: number | string) => {
     setCardData((prevCards) => {
       const updatedCards = prevCards.filter((card) => card.id !== id);
 

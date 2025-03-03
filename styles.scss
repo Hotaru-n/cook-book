@@ -132,6 +132,16 @@ body {
     // margin: 3px;
     // border-radius: 25px;
     // background-color: #162628;
+    transition: transform 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(105%);
+    }
+
+    &.active {
+      transform: scale(105%);
+    }
 
     &-container {
       display: flex;
@@ -158,24 +168,34 @@ body {
       position: absolute;
       top: 3.5rem;
       right: 4rem;
-      background-color: #000000;
+      background-color: #b22c2c;
       margin: 0;
       padding: 10px 10px;
       border-radius: 5px;
       box-shadow: 0 0 12px 1px #4b1f20a0;
       user-select: none;
+
+      &:hover {
+        background-color: #ffffff;
+        color: #000000;
+      }
     }
 
     &-delete {
       position: absolute;
       top: 0.5rem;
       right: 4rem;
-      background-color: #000000;
+      background-color: #b22c2c;
       margin: 0;
       padding: 10px 10px;
       border-radius: 5px;
       box-shadow: 0 0 12px 1px #4b1f20a0;
       user-select: none;
+
+      &:hover {
+        background-color: #ffffff;
+        color: #000000;
+      }
     }
 
     &-time {
@@ -192,17 +212,17 @@ body {
 
     &-title-wrapper {
       height: 120px;
-      width: 330px;
+      width: 350px;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
     }
 
     &-title {
       word-break: normal;
-      width: 215px;
+      // width: 100%;
       padding-top: 5px;
-      padding-left: 5px;
       margin: 0;
+      text-align: center;
     }
 
     &-button {

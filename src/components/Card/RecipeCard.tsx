@@ -1,6 +1,16 @@
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 
-const RecipeCard = ({
+type RecipeCardProps = {
+  isActive: boolean;
+  onClick: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
+  time: string;
+  title: string;
+  cover: string;
+};
+
+const RecipeCard: React.FC<RecipeCardProps> = ({
   isActive,
   onClick,
   onEdit,
@@ -10,7 +20,7 @@ const RecipeCard = ({
   cover,
 }) => {
   return (
-    <article className="main__card card">
+    <article className={`main__card card ${isActive ? "active" : ""} `}>
       <div className="main__card-image-wrapper">
         <CloseOutlined
           type="button"
@@ -29,6 +39,7 @@ const RecipeCard = ({
           onClick={onEdit}
         />
         <img
+          onClick={onClick}
           className="main__card-image"
           src={cover || "/images/sokaku.jpg"}
           alt="Изображение продукта"
@@ -38,12 +49,12 @@ const RecipeCard = ({
       </div>
       <div className="main__card-title-wrapper">
         <h3 className="main__card-title">{title}</h3>
-        <button
+        {/* <button
           onClick={onClick}
           className={`button main__card-button ${isActive ? "active" : ""}`}
         >
           Info
-        </button>
+        </button> */}
       </div>
     </article>
   );
