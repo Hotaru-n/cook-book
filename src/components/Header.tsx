@@ -14,7 +14,7 @@ export default function Header() {
               </Link>
             </li>
             <li className="header__menu-item">
-              <Link className="header__menu-link" to="/recipe_gallary">
+              <Link className="header__menu-link" to="/recipe_gallery">
                 Gallery
               </Link>
             </li>
