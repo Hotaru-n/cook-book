@@ -17,7 +17,7 @@ interface Card {
   description: string;
 }
 
-const RecipeGallary = () => {
+const RecipeGallery = () => {
   const API_URL = "http://localhost:3000/items";
 
   const [cardData, setCardData] = useState<Card[]>([]);
@@ -201,4 +201,4 @@ const RecipeGallary = () => {
   );
 };
 
-export default RecipeGallary;
+export default RecipeGallery;
